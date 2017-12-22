@@ -8,11 +8,17 @@
   "license": "MIT",
   "bin": "cli.js",
   "private": false,
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "chokidar": "^1.7.0",
     "deepmerge": "^2.0.1",
     "glob": "^7.1.2",
     "js-yaml": "^3.10.0",
     "meow": "^4.0.0"
+  },
+  "devDependencies": {
+    "jest": "^22.0.4"
   }
 }

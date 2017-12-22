@@ -12,10 +12,9 @@ const flatten = (locales) => {
 
     if (typeof value === 'object') {
       for (let childKey of Object.keys(flatten(value))) {
-        const childKeyParts = childKey.split(/\./);
         let newValue = value;
 
-        for (let childKeyPart of childKeyParts) {
+        for (let childKeyPart of childKey.split(/\./)) {
           newValue = newValue[childKeyPart];
         }
 
@@ -35,7 +34,7 @@ const createFile = (input, options) => {
 
   glob(input, {}, (err, files) => {
     if (err) {
-      console.log(err);
+      console.error(err);
 
       return false;
     };
@@ -50,7 +49,7 @@ const createFile = (input, options) => {
 
     fs.writeFile(output, `export default ${JSON.stringify(locales)}`, (err) => {
       if (err) {
-        console.log('Error ! Could not create file.', '\n', err);
+        console.error('Error ! Could not create file.', '\n', err);
 
         return false;
       };
@@ -63,16 +62,22 @@ const createFile = (input, options) => {
 };
 
 module.exports = (input, options) => {
-  const {output, watch} = options;
-
   if (!input) {
-    console.log('Error ! Please specify an input directory.');
+    console.error('Error ! Please specify an input directory.');
 
     return false;
   }
 
+  if (!options) {
+    console.error('Error ! No options provided.');
+
+    return false;
+  }
+
+  const {output, watch} = options;
+
   if (!output) {
-    console.log('Error ! Please specify an output file.');
+    console.error('Error ! Please specify an output file.');
 
     return false;
   }
