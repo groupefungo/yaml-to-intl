@@ -1,3 +1,6 @@
+const glob = require('glob');
+const yaml = require('js-yaml');
+
 module.exports = (input, options) => {
   if (!input) {
     console.log('Error ! Please specify an input directory.');
@@ -5,11 +8,19 @@ module.exports = (input, options) => {
     return false;
   }
 
-  const {output} = options;
+  const {output, watch} = options;
 
   if (!output) {
     console.log('Error ! Please specify an output file.');
 
     return false;
   }
+
+  glob(input, {}, (err, files) => {
+    if (err) {
+      console.log(err);
+    };
+
+    files.forEach((file) => console.log(file));
+  });
 };

@@ -9,6 +9,8 @@
   "bin": "cli.js",
   "private": false,
   "dependencies": {
+    "glob": "^7.1.2",
+    "js-yaml": "^3.10.0",
     "meow": "^4.0.0"
   }
 }
