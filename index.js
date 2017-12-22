@@ -30,7 +30,7 @@ const flatten = (locales) => {
 
 module.exports = (input, options) => {
   const {output, watch} = options;
-  const locales = {};
+  let locales = {};
 
   if (!input) {
     console.log('Error ! Please specify an input directory.');
