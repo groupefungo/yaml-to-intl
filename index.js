@@ -21,6 +21,10 @@ module.exports = (input, options) => {
       console.log(err);
     };
 
-    files.forEach((file) => console.log(file));
+    files.forEach((file) => {
+      const locales = yaml.safeLoad(fs.readFileSync(file, 'utf8'), {json: true});
+
+      console.log(locales);
+    });
   });
 };
