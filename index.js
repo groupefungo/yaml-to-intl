@@ -11,7 +11,6 @@ const flatten = (locales) => {
     if (typeof value === 'object') {
       Object.keys(flatten(value)).forEach((childKey) => {
         console.log(childKey);
-        console.log(value);
         data[`${key}.${childKey}`] = value[childKey];
       });
     } else {
