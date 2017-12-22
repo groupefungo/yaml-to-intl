@@ -54,8 +54,6 @@ module.exports = (input, options) => {
       const locale = Object.keys(yamlJson)[0];
       const flattenedLocales = flatten(yamlJson[locale]);
 
-      console.log(locales);
-
       locales = merge(locales, {[locale]: flattenedLocales});
     });
   });
