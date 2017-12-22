@@ -2,7 +2,7 @@ const fs = require('fs');
 const glob = require('glob');
 const yaml = require('js-yaml');
 
-const flatten = (locales) {
+const flatten = (locales) => {
   const data = {};
 
   Object.keys(locales).forEach((key) => {
