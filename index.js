@@ -1,7 +1,7 @@
+const merge = require('deepmerge');
 const fs = require('fs');
 const glob = require('glob');
 const yaml = require('js-yaml');
-const merge = require('deepmerge');
 
 const flatten = (locales) => {
   const data = {};
@@ -28,21 +28,9 @@ const flatten = (locales) => {
   return data;
 };
 
-module.exports = (input, options) => {
-  const {output, watch} = options;
+const createFile = (input, options) => {
+  const {output} = options;
   let locales = {};
-
-  if (!input) {
-    console.log('Error ! Please specify an input directory.');
-
-    return false;
-  }
-
-  if (!output) {
-    console.log('Error ! Please specify an output file.');
-
-    return false;
-  }
 
   glob(input, {}, (err, files) => {
     if (err) {
@@ -71,4 +59,32 @@ module.exports = (input, options) => {
       return true;
     });
   });
+};
+
+module.exports = (input, options) => {
+  const {output, watch} = options;
+
+  if (!input) {
+    console.log('Error ! Please specify an input directory.');
+
+    return false;
+  }
+
+  if (!output) {
+    console.log('Error ! Please specify an output file.');
+
+    return false;
+  }
+
+  createFile(input, options);
+
+  if (watch) {
+    const watcher = chokidar.watch(input);
+
+    watcher.on('all', () => {
+      createFile(input, options);
+    });
+  }
+
+  return true;
 };
