@@ -5,11 +5,11 @@ const yaml = require('js-yaml');
 const flatten = (locales) => {
   const data = {};
 
-  Object.keys(locales).forEach((key) => {
+  for (let key of Object.keys(locales)) {
     const value = locales[key];
 
     if (typeof value === 'object') {
-      Object.keys(flatten(value)).forEach((childKey) => {
+      for (let childKey of Object.keys(flatten(value))) {
         const childKeyParts = childKey.split(/\./);
         let newValue = value;
 
