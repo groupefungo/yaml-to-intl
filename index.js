@@ -49,14 +49,14 @@ module.exports = (input, options) => {
       console.log(err);
     };
 
-    files.forEach((file) => {
+    for (let file of files) {
       const yamlJson = yaml.safeLoad(fs.readFileSync(file, 'utf8'), {json: true});
       const locale = Object.keys(yamlJson)[0];
       const flattenedLocales = flatten(yamlJson[locale]);
 
       locales = merge(locales, {[locale]: flattenedLocales});
-    });
-  });
+    };
 
-  console.log(locales);
+    console.log(locales);
+  });
 };
