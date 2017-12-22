@@ -1,4 +1,15 @@
 module.exports = (input, options) => {
-  console.log(input);
-  console.log(options);
+  if (!input) {
+    console.log('Error ! Please specify an input directory.');
+
+    return false;
+  }
+
+  const {output} = options;
+
+  if (!output) {
+    console.log('Error ! Please specify an output file.');
+
+    return false;
+  }
 };
