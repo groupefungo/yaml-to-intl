@@ -22,7 +22,7 @@ const flatten = (locales) => {
     } else {
       data[key] = value;
     }
-  });
+  };
 
   return data;
 };
