@@ -10,11 +10,14 @@ const flatten = (locales) => {
 
     if (typeof value === 'object') {
       Object.keys(flatten(value)).forEach((childKey) => {
-        console.log(key);
-        console.log(childKey);
-        console.log(value);
+        const childKeyParts = childKey.split(/\./);
+        let newValue = value;
 
-        data[`${key}.${childKey}`] = value[childKey];
+        for (let childKeyPart of childKeyParts) {
+          newValue = newValue[childKeyPart];
+        }
+
+        data[`${key}.${childKey}`] = newValue;
       });
     } else {
       data[key] = value;
