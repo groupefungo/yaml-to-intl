@@ -18,7 +18,7 @@ const flatten = (locales) => {
         }
 
         data[`${key}.${childKey}`] = newValue;
-      });
+      };
     } else {
       data[key] = value;
     }
