@@ -1,3 +1,4 @@
+const chokidar = require('chokidar');
 const merge = require('deepmerge');
 const fs = require('fs');
 const glob = require('glob');
