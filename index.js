@@ -82,7 +82,7 @@ module.exports = (input, options) => {
   if (watch) {
     const watcher = chokidar.watch(input);
 
-    watcher.on('all', () => {
+    watcher.on('change', () => {
       createFile(input, options);
     });
   }
