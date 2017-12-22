@@ -14,6 +14,8 @@ const flatten = (locales) => {
         const parts = childKey.split(/./);
 
         for (let part of parts) {
+          console.log(newValue);
+          console.log(part);
           newValue = newValue[part];
         }
 
@@ -50,7 +52,7 @@ module.exports = (input, options) => {
     files.forEach((file) => {
       const locales = yaml.safeLoad(fs.readFileSync(file, 'utf8'), {json: true});
 
-      console.log(flatten(locales));
+      // console.log(flatten(locales));
     });
   });
 };
