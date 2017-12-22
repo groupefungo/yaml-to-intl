@@ -1,6 +1,4 @@
-const yamlToIntl = (input, options) => {
+module.exports = (input, options) => {
   console.log(input);
   console.log(options);
 };
-
-export default yamlToIntl;
