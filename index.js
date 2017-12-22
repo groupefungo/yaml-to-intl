@@ -57,7 +57,7 @@ module.exports = (input, options) => {
       locales = merge(locales, {[locale]: flattenedLocales});
     };
 
-    fs.writeFile(output, `export default ${locales}`, (err) => {
+    fs.writeFile(output, `export default ${JSON.stringify(locales)}`, (err) => {
       if (err) {
         console.log('Error ! Could not create file.', err);
       };
