@@ -10,16 +10,7 @@ const flatten = (locales) => {
 
     if (typeof value === 'object') {
       Object.keys(flatten(value)).forEach((childKey) => {
-        let newValue = value;
-        const parts = childKey.split(/./);
-
-        for (let part of parts) {
-          console.log(newValue);
-          console.log(part);
-          newValue = newValue[part];
-        }
-
-        data[`${key}.${childKey}`] = newValue;
+        data[`${key}.${childKey}`] = value[childKey];
       });
     } else {
       data[key] = value;
@@ -51,9 +42,9 @@ module.exports = (input, options) => {
 
     files.forEach((file) => {
       const locales = yaml.safeLoad(fs.readFileSync(file, 'utf8'), {json: true});
+      const locale = Object.keys(locales)[0];
 
-flatten(locales)
-      // console.log(flatten(locales));
+      console.log(flatten(locales[locale]));
     });
   });
 };
