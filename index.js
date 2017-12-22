@@ -1,6 +1,7 @@
 const fs = require('fs');
 const glob = require('glob');
 const yaml = require('js-yaml');
+const merge = require('deepmerge');
 
 const flatten = (locales) => {
   const data = {};
@@ -28,13 +29,14 @@ const flatten = (locales) => {
 };
 
 module.exports = (input, options) => {
+  const {output, watch} = options;
+  const locales = {};
+
   if (!input) {
     console.log('Error ! Please specify an input directory.');
 
     return false;
   }
-
-  const {output, watch} = options;
 
   if (!output) {
     console.log('Error ! Please specify an output file.');
@@ -48,10 +50,13 @@ module.exports = (input, options) => {
     };
 
     files.forEach((file) => {
-      const locales = yaml.safeLoad(fs.readFileSync(file, 'utf8'), {json: true});
-      const locale = Object.keys(locales)[0];
+      const yamlJson = yaml.safeLoad(fs.readFileSync(file, 'utf8'), {json: true});
+      const locale = Object.keys(yamlJson)[0];
 
-      console.log(flatten(locales[locale]));
+      const flattenedLocales = flatten(yamlJson[locale]);
+      merge(locales, {[locale]: flattenedLocales});
     });
   });
+
+  console.log(locales);
 };

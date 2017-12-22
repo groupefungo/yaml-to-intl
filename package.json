@@ -9,6 +9,7 @@
   "bin": "cli.js",
   "private": false,
   "dependencies": {
+    "deepmerge": "^2.0.1",
     "glob": "^7.1.2",
     "js-yaml": "^3.10.0",
     "meow": "^4.0.0"
