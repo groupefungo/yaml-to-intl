@@ -52,9 +52,9 @@ module.exports = (input, options) => {
     files.forEach((file) => {
       const yamlJson = yaml.safeLoad(fs.readFileSync(file, 'utf8'), {json: true});
       const locale = Object.keys(yamlJson)[0];
-
       const flattenedLocales = flatten(yamlJson[locale]);
-      merge(locales, {[locale]: flattenedLocales});
+
+      locales = merge(locales, {[locale]: flattenedLocales});
     });
   });
 
