@@ -47,6 +47,8 @@ module.exports = (input, options) => {
   glob(input, {}, (err, files) => {
     if (err) {
       console.log(err);
+
+      return false;
     };
 
     for (let file of files) {
@@ -59,10 +61,14 @@ module.exports = (input, options) => {
 
     fs.writeFile(output, `export default ${JSON.stringify(locales)}`, (err) => {
       if (err) {
-        console.log('Error ! Could not create file.', err);
+        console.log('Error ! Could not create file.', '\n', err);
+
+        return false;
       };
 
       console.log('Success !');
+
+      return true;
     });
   });
 };
