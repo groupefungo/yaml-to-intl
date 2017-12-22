@@ -1,3 +1,4 @@
+const fs = require('fs');
 const glob = require('glob');
 const yaml = require('js-yaml');
 
