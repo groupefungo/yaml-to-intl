@@ -16,7 +16,7 @@ const cli = meow(`
       alias: 'o',
     },
     watch: {
-      type: bool,
+      type: 'boolean',
       alias: 'w',
       default: false,
     },
