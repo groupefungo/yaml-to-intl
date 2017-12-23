@@ -2,13 +2,14 @@
   "name": "yaml-to-intl",
   "version": "1.0.0",
   "description": "convert yaml locales to the intl format",
-  "main": "index.js",
+  "main": "lib/cli.js",
   "repository": "https://github.com/teamhubble/yaml-to-intl.git",
   "author": "Alexandre Zicat <alexzicat@teamhubble.com>",
   "license": "MIT",
-  "bin": "cli.js",
+  "bin": "lib/cli.js",
   "private": false,
   "scripts": {
+    "build": "babel index.js cli.js --out-dir ./lib",
     "test": "jest"
   },
   "dependencies": {
@@ -19,6 +20,10 @@
     "meow": "^4.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.35",
+    "@babel/core": "^7.0.0-beta.35",
+    "@babel/preset-env": "^7.0.0-beta.35",
+    "@babel/preset-stage-2": "^7.0.0-beta.35",
     "jest": "^22.0.4"
   }
 }
