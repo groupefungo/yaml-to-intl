@@ -1,5 +1,6 @@
 module.exports = {
   collectCoverage: true,
-  coverageReporters: ['text'],
+  coveragePathIgnorePatterns: ['node_modules', '/tests/'],
+  coverageReporters: ['html', 'text'],
   verbose: true,
 };

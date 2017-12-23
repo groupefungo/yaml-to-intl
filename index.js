@@ -29,68 +29,86 @@ const flatten = (locales) => {
 };
 
 const createFile = (input, options) => {
-  const {output} = options;
-  let locales = {};
+  return new Promise((resolve, reject) => {
+    const {output} = options;
+    let locales = {};
 
-  glob(input, {}, (err, files) => {
-    if (err) {
-      console.error(err);
-
-      return false;
-    };
-
-    for (let file of files) {
-      const yamlJson = yaml.safeLoad(fs.readFileSync(file, 'utf8'), {json: true});
-      const locale = Object.keys(yamlJson)[0];
-      const flattenedLocales = flatten(yamlJson[locale]);
-
-      locales = merge(locales, {[locale]: flattenedLocales});
-    };
-
-    fs.writeFile(output, `export default ${JSON.stringify(locales)}`, (err) => {
+    glob(input, (err, files) => {
       if (err) {
-        console.error('Error ! Could not create file.', '\n', err);
+        const error = 'Error ! Invalid input path.';
 
-        return false;
+        console.error(error);
+
+        return reject(error);
       };
 
-      console.log('Success !');
+      for (let file of files) {
+        const yamlJson = yaml.safeLoad(fs.readFileSync(file, 'utf8'), {json: true});
+        const locale = Object.keys(yamlJson)[0];
+        const flattenedLocales = flatten(yamlJson[locale]);
 
-      return true;
+        locales = merge(locales, {[locale]: flattenedLocales});
+      };
+
+      fs.writeFile(output, `export default ${JSON.stringify(locales)}`, (err) => {
+        if (err) {
+          const error = `Error ! Could not create file ${output}.`;
+
+          console.error(error);
+
+          return reject(error);
+        };
+
+        const successMessage = 'Success !';
+
+        console.log(successMessage);
+
+        return resolve(successMessage);
+      });
     });
   });
 };
 
 module.exports = (input, options) => {
-  if (!input) {
-    console.error('Error ! Please specify an input directory.');
+  return new Promise((resolve, reject) => {
+    if (!input) {
+      const error = 'Error ! Please specify an input directory.';
 
-    return false;
-  }
+      console.error(error);
 
-  if (!options) {
-    console.error('Error ! No options provided.');
+      return reject(error);
+    }
 
-    return false;
-  }
+    if (!options) {
+      const error = 'Error ! No options provided.';
 
-  const {output, watch} = options;
+      console.error(error);
 
-  if (!output) {
-    console.error('Error ! Please specify an output file.');
+      return reject(error);
+    }
 
-    return false;
-  }
+    const {output, watch} = options;
 
-  createFile(input, options);
+    if (!output) {
+      const error = 'Error ! Please specify an output file.';
 
-  if (watch) {
-    const watcher = chokidar.watch(input);
+      console.error(error);
 
-    watcher.on('change', () => {
-      createFile(input, options);
+      return reject(error);
+    }
+
+    createFile(input, options).then((result) => {
+      resolve(result);
+    }).catch((error) => {
+      reject(error);
     });
-  }
 
-  return true;
+    if (watch) {
+      const watcher = chokidar.watch(input);
+
+      watcher.on('change', () => {
+        createFile(input, options);
+      });
+    }
+  });
 };
